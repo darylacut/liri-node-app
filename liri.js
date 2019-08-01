@@ -1,3 +1,6 @@
+//grabs the axios package
+var axios = require( "axios" );
+
 //reading and setting variables with the dotenv package;
 require( "dotenv" ).config();
 
@@ -11,6 +14,24 @@ var spotify = new Spotify( keys.spotify );
     //var UserInput = process.argv[3];
     //var SearchProcess = process.argv[2];
 
+//this creates a switch case statement depending on what the user searches for
+// we also assign which function to run depending on the process
 switch (process.argv[2]) {
-    case "concert-this"
+    case "concert-this": searchConcert();
+        break;
+    
+    case "spotify-this-song": searchSong();
+        break;
+
+    case "movie-this": searchMovie();
+        break;
+ 
+    case "do-what-it-says": runRandom();
+        break;
+}
+
+//now we define each function;
+
+searchConcert () {
+
 }
