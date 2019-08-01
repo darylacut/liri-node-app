@@ -11,6 +11,9 @@ var keys = require( "./keys.js" );
 var Spotify = require( 'node-spotify-api' );
 var spotify = new Spotify( keys.spotify );
 
+//includes the FS package for reading outside random text file;
+var fs = require ("fs");
+
 //assigns the user's input and searh process to global variables;
 var SearchProcess = process.argv[2];
 var UserInput;
@@ -99,5 +102,28 @@ function searchSong () {
 
 function runRandom () {
 
-}
+//we run the readFile to access random.txt and store the output to "data";
+    fs.readFile( "random.txt", "utf8", function ( data ) {
+    });
 
+    var output = data.split(",");
+        console.log(output);
+    //we loop through the created array
+    for (var i = 0; i < output.length; i++) {
+        //we assign the objects inside the output array as the search process and the user input;
+        var SearchProcess = output[1];
+        var UserInput = output[2];
+
+         //then check what to execute depending on the data written in random.txt; 
+         if (SearchProcess = "concert-this") {
+            searchConcert(); 
+        } else if (SearchProcess = "spotify-this-song") {
+            searchSong();
+        } else if (SearchProcess = "movie-this") {
+            searchMovie();
+        } else if (SearchProcess = "do-what-it-says") {
+            runRandom();
+        }
+    }
+       
+};
