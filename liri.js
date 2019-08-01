@@ -8,6 +8,7 @@ require( "dotenv" ).config();
 var keys = require( "./keys.js" );
 
 //enables access to Spotify keys;
+var Spotify = require( 'node-spotify-api' );
 var spotify = new Spotify( keys.spotify );
 
 //assigns the user's input and searh process to global variables;
@@ -50,21 +51,22 @@ function searchConcert () {
     var bandsURL = "https://rest.bandsintown.com/artists/" + UserInput + "/events?app_id=codingbootcamp";
 
     axios.get( bandsURL ).then( function ( response ) {
-       //console.log( response );
-        console.log( "Venue: " + response.data.name + 
+        //console.log( response );
+        console.log( "Venue: " + response.data.description + 
             "\nLocation: " + response.data.venue + 
-            "\nDate: " + response.data.date);
+            "\nDate: " + response.data.datetime.format( "MM/DD/YYYY" ));
     });
 };
 
 
 function searchMovie () {
+    
     // we  create variable for movie url then run axios request ;
     var movieURL = "http://www.omdbapi.com/?t=" + UserInput + "&y=&plot=short&apikey=trilogy";
 
     axios.get( movieURL ).then( function ( response ) {
-        console.log( "Title: " + response.data.title + 
-        "\nYear: " + response.data.year + 
+        console.log( "Title: " + response.data.Title + 
+        "\nYear: " + response.data.Year + 
         "\nIMDB Rating: " + response.data.imdbRating + 
         "\nRotten Tomatoes Rating: " + response.data.Ratings + 
         "\nCountry: " + response.data.Country +
@@ -73,11 +75,29 @@ function searchMovie () {
         "\nCast: " + response.data.Actors);
 
     if (UserInput = null) {
-        UserInput == "Mr.+Nobody";
+        UserInput == "Mr. Nobody";
     }
     });
 };
 
 
-function searchSong () ;
+function searchSong () {
+    spotify
+        .search({ type: 'track', query: UserInput })
+        .then( function( response ) {
+            console.log( response );
+        })
+        .catch(function( err ) {
+            console.log( err );
+        });
     
+    if ( UserInput = null ) {
+        UserInput == "The Sign - Ace of Base";
+    }
+};
+
+
+function runRandom () {
+
+}
+
