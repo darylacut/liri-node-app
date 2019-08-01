@@ -11,15 +11,16 @@ var keys = require( "./keys.js" );
 var spotify = new Spotify( keys.spotify );
 
 //assigns the user's input and searh process to global variables;
-    var SearchProcess = process.argv[2];
-    var UserInput;
-    // we need to loop through the node array for all the words of the artist's name;
-    for (var i = 3; i < process.argv.length; i++) {
-        if (i > 3 && i < process.argv.length) {
-        UserInput = UserInput + "%20" + process.argv[i];
-        } else {
-            UserInput = process.argv[i];
+var SearchProcess = process.argv[2];
+var UserInput;
+// we need to loop through the node array for all the words of the artist's name;
+for (var i = 3; i < process.argv.length; i++) {
+    if (i > 3 && i < process.argv.length) {
+    UserInput = UserInput + "%20" + process.argv[i];
+    } else {
+        UserInput = process.argv[i];
     }
+}
 
 //this creates a switch case statement depending on what the user searches for;
 // we also assign which function to run depending on the process;
@@ -47,7 +48,7 @@ function searchConcert () {
     axios.get( bandsURL ).then( function ( response ) {
        console.log( response );
         // console.log( "Venue: " + response.venue)
-    })
+    });
 
 
 };
