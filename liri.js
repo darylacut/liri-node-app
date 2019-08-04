@@ -57,7 +57,7 @@ switchProcess(userProcess);
 
 
 function searchConcert () {
-  
+    console.log ("\nSearching for: " + userInput);
     //we create variable to hold the bands in town URL then run an axios request to Bands in Town API, then print the required details;
     var bandsURL = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp";
     
@@ -65,7 +65,8 @@ function searchConcert () {
         
         // we create a for loop so that every concert of the artist stored in the array of data is displayed;
         for (i = 0; i < response.data.length; i++){
-            console.log( "\nVenue: " + response.data[i].venue.name + 
+            console.log( "\nConcert "+ i + 
+                "\nVenue: " + response.data[i].venue.name + 
                 "\nLocation: " + response.data[i].venue.city + ", " + response.data[i].venue.country +
                 "\nDate: " + moment( response.data[i].datetime ).format( "MM/DD/YYYY" ));
         }
@@ -77,6 +78,7 @@ function searchMovie () {
     if (userInput == null || userInput == "" || userInput == 0) {
         userInput = "Mr. Nobody";
     }
+    console.log ("\nSearching for: " + userInput);
     // we  create variable for movie url then run axios request ;
     var movieURL = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
 
@@ -100,12 +102,13 @@ function searchSong () {
     if (userInput == null || userInput == "" || userInput == 0) {
         userInput = "The Sign";
     }
+    console.log ("\nSearching for: " + userInput);
     spotify
         .search({ type: 'track', query: userInput })
             //album OR track OR album;
         .then( function( response ) {
              //console.log(response); 
-            console.log( "\nArtist: " + response.tracks.items[0].artists[0].name + 
+            console.log("\nArtist: " + response.tracks.items[0].artists[0].name + 
                         "\nTitle: " + response.tracks.items[0].name + 
                         "\nAlbum: " + response.tracks.items[0].album.name + 
                         "\nPreview Link: " + response.tracks.items[0].preview_url);
