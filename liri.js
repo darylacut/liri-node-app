@@ -18,7 +18,7 @@ var spotify = new Spotify( keys.spotify );
 var fs = require ("fs");
 
 //assigns the user's input and searh process to global variables;
-var Process = process.argv[2];
+var userProcess = process.argv[2];
 var userInput;
 
 // we need to loop through the node array for all the words of the user's input;
@@ -50,7 +50,7 @@ function switchProcess (userProcess) {
 }
 
 // then we execute the switchProcess function;
-runRandom(Process);
+switchProcess(userProcess);
 
 
 //---------      now we define each function;     ---------------;
@@ -99,6 +99,7 @@ function searchMovie () {
 
 
 function searchSong () {
+    
     spotify
         .search({ type: 'track', query: userInput })
             //album OR track OR album;
@@ -119,33 +120,43 @@ function searchSong () {
 };
 
 
-
-
 function runRandom () {
 
 //we run the readFile to access random.txt and store the output to "data";
-    fs.readFile( "random.txt", "utf8", function ( data ) {
-        var output = data.split(",");
-      //  console.log(output);
-    //we loop through the created array
-    //for (var i = 0; i < output.length; i++) {
+    fs.readFile( "random.txt", "utf8", function ( error, data ) {
+       
+       //if code had errors, make it will log the error;
+       if (error) {
+           return console.log ( error );
+       }
+
+       //now we will print the contents of the data
+        console.log( data );
+  
+        //now we split the data and and store it into a variable "output";
+        var output = data.split( "," );
+
+        // now we log the output to the console;
+        console.log( output );
+
         //we assign the objects inside the output array as the search process and the user input;
-        var Process = output[0];
+        var SearchProcess = output[0];
         var userInput = output[1];
+       
+         // then check what to execute depending on the data written in random.txt; 
+         if (SearchProcess == "concert-this") {
+            searchConcert(); 
+        } else if (SearchProcess == "spotify-this-song") {
+            searchSong();
+        } else if (SearchProcess == "movie-this") {
+            searchMovie();
+        } else if (SearchProcess == "do-what-it-says") {
+           runRandom();
+        }
     });
 
-         //then check what to execute depending on the data written in random.txt; 
-        //  if (SearchProcess == "concert-this") {
-        //     searchConcert(); 
-        // } else if (SearchProcess == "spotify-this-song") {
-        //     searchSong();
-        // } else if (SearchProcess == "movie-this") {
-        //     searchMovie();
-        // } else if (SearchProcess == "do-what-it-says") {
-        //     runRandom();
-        // }
-     
-    //then we call the function which goes through the switch statements, with the random output data to be used for the switch statement;
-   // switchProcess( Process );
+
+     //then we call the function which goes through the switch statements, with the random output data to be used for the switch statement;
+    // switchProcess( userProcess );       
     
 };
