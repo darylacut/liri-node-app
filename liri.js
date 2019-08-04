@@ -74,7 +74,9 @@ function searchConcert () {
 
 
 function searchMovie () {
-    
+    if (userInput == null || userInput == "" || userInput == 0) {
+        userInput = "Mr. Nobody";
+    }
     // we  create variable for movie url then run axios request ;
     var movieURL = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
 
@@ -91,15 +93,13 @@ function searchMovie () {
         console.log(response.data.Ratings[1]);
     });
 
-    if (userInput == null) {
-        userInput = "Mr. Nobody";
-    }
-
 };
 
 
 function searchSong () {
-    
+    if (userInput == null || userInput == "" || userInput == 0) {
+        userInput = "The Sign";
+    }
     spotify
         .search({ type: 'track', query: userInput })
             //album OR track OR album;
@@ -112,9 +112,6 @@ function searchSong () {
         })
         .catch(function( err ) {
             console.log( err );
-            if ( userInput == null ) {
-                userInput = "The Sign";
-              } 
         });
        
 };
