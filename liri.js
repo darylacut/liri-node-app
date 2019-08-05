@@ -32,7 +32,7 @@ var fs = require ("fs");
 
 //this declares a function with a switch case statement inside;
 function switchProcess () {
-    var userInput = userInput;
+    // var userInput = userInput;
     //this creates a switch case statement depending on what the user searches for;
 // we also assign which function to run depending on the process;
     switch (userProcess) {
@@ -45,7 +45,7 @@ function switchProcess () {
         case "movie-this": searchMovie(userInput);
             break;
     
-        case "do-what-it-says": runRandom(userInput);
+        case "do-what-it-says": runRandom();
             break;
     }
 }
@@ -57,13 +57,12 @@ switchProcess();
 //---------      now we define each function;     ---------------;
 
 
-function searchConcert () {
+function searchConcert (userInput) {
     console.log ("\nHere are the scheduled concerts for: " + userInput);
     //we create variable to hold the bands in town URL then run an axios request to Bands in Town API, then print the required details;
     var bandsURL = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp";
     
     axios.get( bandsURL ).then( function ( response ) {
-        
         // we create a for loop so that every concert of the artist stored in the array of data is displayed;
         for (i = 0; i < response.data.length; i++){
             console.log( "\nConcert "+ i + 
@@ -75,7 +74,7 @@ function searchConcert () {
 };
 
 
-function searchMovie () {
+function searchMovie (userInput) {
 
     if (userInput == null || userInput == "" || userInput == 0) {
         userInput = "Mr. Nobody";
@@ -100,10 +99,11 @@ function searchMovie () {
 };
 
 
-function searchSong () {
+function searchSong (userInput) {
     if (userInput == null || userInput == "" || userInput == 0) {
-        userInput = "The Sign";
+        userInput = "The Sign - Ace of Base";
     }
+
     console.log ("\nHere is the information for the song: " + userInput);
     spotify
         .search({ type: 'track', query: userInput })
@@ -118,7 +118,7 @@ function searchSong () {
         .catch(function( err ) {
             console.log( err );
         });
-       
+    
 };
 
 
@@ -146,18 +146,16 @@ function runRandom () {
         var userInput = output[1];
       
         // //then we call the function which goes through the switch statements, with the random output data to be used for the switch statement;
-        // switchProcess(userProcess);    
+        // switchProcess(userInput);    
 
          // then check what to execute depending on the data written in random.txt; 
          if (userProcess == "concert-this") {
-            searchConcert(userInput); 
+            searchConcert(userInput.slice(1, -1)); 
         } else if (userProcess == "spotify-this-song") {
-            searchSong(userInput);
+            searchSong(userInput.slice(1, -1));
         } else if (userProcess == "movie-this") {
-            searchMovie(userInput);
-        } else if (userProcess == "do-what-it-says") {
-           switchProcess(userInput);
-        }
+            searchMovie(userInput.slice(1, -1));
+        } 
     });
 
 };
